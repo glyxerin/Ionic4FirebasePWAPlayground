@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import {Platform, ToastController} from "@ionic/angular";
+import {LoadingController, Platform, ToastController} from "@ionic/angular";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetUtilService {
 
-  constructor(public toastController: ToastController, private platform: Platform) {}
+  loading: any = {};
+
+  constructor(public toastController: ToastController, private platform: Platform,
+  private loadingController: LoadingController) {}
 
   async presentToast(message) {
     const toast = await this.toastController.create({
@@ -24,6 +27,21 @@ export class WidgetUtilService {
       ]
     });
     toast.present();
+  }
+
+  async presentLoadingWithOptions() {
+    this.loading = await this.loadingController.create({
+      message: 'Please wait...',
+      translucent: true,
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed with role:', role);
+  }
+
+  async dismissLoader() {
+    await this.loading.dismiss();
   }
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
+import {auth} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,18 @@ export class FirebaseAuthService {
   async logout() {
     try {
       await this.angularFireAuth.signOut();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  getAuthState() {
+    return this.angularFireAuth.authState;
+  }
+
+  async googleLoginWeb() {
+    try {
+      return await this.angularFireAuth.signInWithRedirect(new auth.GoogleAuthProvider());
     } catch (error) {
       throw new Error(error);
     }

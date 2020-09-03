@@ -33,6 +33,7 @@ export class WidgetUtilService {
     this.loading = await this.loadingController.create({
       message: 'Please wait...',
       translucent: true,
+      backdropDismiss: true
     });
     await this.loading.present();
 
@@ -41,6 +42,7 @@ export class WidgetUtilService {
   }
 
   async dismissLoader() {
+    console.log('dismissLoader()')
     await this.loading.dismiss();
   }
 

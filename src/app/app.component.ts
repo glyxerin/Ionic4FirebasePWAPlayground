@@ -21,9 +21,9 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Profile',
+      url: '/profile',
+      icon: 'person'
     }
   ];
 
@@ -48,18 +48,22 @@ export class AppComponent implements OnInit {
     this.getAuthState();
   }
 
-  getAuthState() {
-    this.widgetUtilService.presentLoadingWithOptions();
+  async getAuthState() {
+    //await this.widgetUtilService.presentLoadingWithOptions();
 
-    this.firebaseAuthService.getAuthState().subscribe(user => {
+    this.firebaseAuthService.getAuthState().subscribe(async user => {
       console.log('user auth state===', user ? user.toJSON(): null);
       if (user) {
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
       }
+      console.log('dismiss loader')
+      //await this.widgetUtilService.dismissLoader();
       this.handleNavigation();
+    }, (error) => {
       this.widgetUtilService.dismissLoader();
+      this.widgetUtilService.presentToast(error.message);
     })
   }
 

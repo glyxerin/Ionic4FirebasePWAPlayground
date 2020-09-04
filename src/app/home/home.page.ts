@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
 
   getProductList(event = null) {
     this.productAvailable = false;
-    this.firestoreDbService.getProductList().subscribe(result => {
+    this.firestoreDbService.getAllData('product').subscribe(result => {
       console.log('result', result);
       this.productList = result;
       this.productAvailable = true;

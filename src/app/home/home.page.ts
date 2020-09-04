@@ -66,4 +66,8 @@ export class HomePage implements OnInit {
     this.getProductList(event)
   }
 
+  openAddProductPage() {
+    this.router.navigate(['/add-product']);
+  }
+
 }

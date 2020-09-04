@@ -80,7 +80,8 @@
                   </ion-button>
                 </ion-col>
                 <ion-col size="6">
-                  <ion-button color="secondary" expand="block" [disabled]="editProductForm.invalid">
+                  <ion-button color="secondary" expand="block" [disabled]="editProductForm.invalid"
+                  (click)="updateProduct()">
                     <ion-icon name="bookmark"></ion-icon>
                     Save
                   </ion-button>

@@ -8,5 +8,21 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center" *ngIf="productAvailable">
+      <ion-col size="12" size-md="6" size-lg="6">
+        <ion-list *ngFor="let product of productList">
+          <ion-item button detail="true">
+            {{product.name}}
+          </ion-item>
+        </ion-list>
+        <p *ngIf="!productList.length">No Product Found!</p>
+      </ion-col>
+    </ion-row>
+    <ion-spinner name="lines" color="secondary" class="page-loader" *ngIf="!productAvailable"></ion-spinner>
+  </ion-grid>
   <ion-button (click)="logout()">Logout</ion-button>
 </ion-content>

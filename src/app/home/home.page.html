@@ -22,8 +22,8 @@
             </ion-button>
           </ion-col>
         </ion-row>
-        <ion-list *ngFor="let product of productList">
-          <ion-item button detail="true"  (click)="openProductDetailPage(product.id)">
+        <ion-list>
+          <ion-item button detail="true"  (click)="openProductDetailPage(product.id)" *ngFor="let product of productList">
             {{product.name}}
           </ion-item>
         </ion-list>

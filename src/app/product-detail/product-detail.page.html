@@ -1,9 +1,38 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>product-detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Detail</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center" *ngIf="productDetailAvailable">
+      <ion-col size="12" size-xs="12" size-md="6" size-lg="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">
+              <ion-icon name="cube" color="secondary"></ion-icon>
+              {{productDetail.name}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let detail of productDetailList">
+                <ion-label>
+                  {{detail.name}}
+                </ion-label>
+                {{detail.value}}
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-spinner name="lines" class="page-loader" color="secondary" *ngIf="!productDetailAvailable"></ion-spinner>
+  </ion-grid>
 
 </ion-content>

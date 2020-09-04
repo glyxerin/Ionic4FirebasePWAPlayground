@@ -23,7 +23,7 @@
           </ion-col>
         </ion-row>
         <ion-list *ngFor="let product of productList">
-          <ion-item button detail="true">
+          <ion-item button detail="true"  (click)="openProductDetailPage(product.id)">
             {{product.name}}
           </ion-item>
         </ion-list>

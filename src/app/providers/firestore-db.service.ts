@@ -38,5 +38,18 @@ export class FirestoreDbService {
       }
   }
 
+  async getDataById(collectionId, docId) {
+      try {
+          const result = await this.db.collection(collectionId).doc(docId).ref.get();
+          if (result.exists) {
+              return result.data();
+          } else {
+              throw new Error('Data not found with given id');
+          }
+      } catch (error) {
+          throw new Error(error);
+      }
+  }
+
 
 }

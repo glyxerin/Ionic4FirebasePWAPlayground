@@ -52,16 +52,20 @@ export class FirestoreDbService {
   }
 
   async updateData(collectionId, docId, updatedData) {
-
       try {
           const result = await this.db.doc(`${collectionId}/${docId}`).update(updatedData);
           return result;
       } catch (error) {
           throw new Error(error);
       }
-
-
   }
 
-
+    async deleteData(collectionId, docId) {
+        try {
+            const result = await this.db.doc(`${collectionId}/${docId}`).delete();
+            return result;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }

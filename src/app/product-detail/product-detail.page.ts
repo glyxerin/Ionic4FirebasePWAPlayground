@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FirestoreDbService} from "../providers/firestore-db.service";
 import {WidgetUtilService} from "../providers/widget-util.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -32,11 +32,13 @@ export class ProductDetailPage implements OnInit {
   };
   validationMessage: any = EDITPRODUCT;
   showEditProductSpinner: boolean = false;
+  showDeleteProductSpinner: boolean = false;
 
   constructor(private helperService: HelperService,
               private activatedRoute: ActivatedRoute,
               private firestoreDbService: FirestoreDbService,
-              private widgetUtilService: WidgetUtilService) {
+              private widgetUtilService: WidgetUtilService,
+              private router: Router) {
     this.activatedRoute.params.subscribe((result) => {
       console.log('result activatedRoute', result);
       this.productId = result.id;
@@ -168,6 +170,35 @@ export class ProductDetailPage implements OnInit {
 
   cancelEdit() {
     this.showEditProductForm = false;
+  }
+
+  deleteProduct() {
+    this.widgetUtilService.presentAlertConfirm(
+        'Delete Product',
+        `Are you sure you want to delete ${this.productDetail.name}`,
+        [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: (blah) => {
+            }
+          }, {
+          text: 'Okay',
+    handler: async () => {
+            try {
+              this.showDeleteProductSpinner = true;
+              await this.firestoreDbService.deleteData('product', this.productId);
+              this.widgetUtilService.presentToast('Product deleted successfully!');
+              this.showDeleteProductSpinner = false;
+              this.router.navigate(['/home']);
+            } catch (error) {
+              this.widgetUtilService.presentToast(error.message);
+              this.showDeleteProductSpinner = false;
+            }
+    }
+        }
+        ]
+    );
 
   }
 
